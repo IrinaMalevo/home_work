@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,18 +23,18 @@ public class MyHomeWork {
     private final By LANGUAGE_TVNET = By.xpath(".//a[text()='RUS']");
 
     private final By OPEN_ALL_ARTICLES = By.xpath(".//span[@class = 'list-article__headline']");
-
+    private WebDriver driver;
 
     @Test
     public void firstTest() {
         System.setProperty("webdriver.chrome.driver", "/Users/anna/Desktop/driver/chromedriver");
-        WebDriver browserWindow = new ChromeDriver();
-        browserWindow.manage().window().maximize();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
 
-        browserWindow.get("http://tvnet.lv");
-        WebDriverWait wait = new WebDriverWait(browserWindow, 10);
+        driver.get("http://tvnet.lv");
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfElementLocated(ACCEPT_COOKIES_BTN));
-        browserWindow.findElement(ACCEPT_COOKIES_BTN).click();
+        driver.findElement(ACCEPT_COOKIES_BTN).click();
         //browserWindow.findElement(OPEN_ARTICLE).click();
         //browserWindow.findElement(OPEN_COMMENT).click();
         //String heading = browserWindow.findElement(By.xpath("//span[@class = 'list-article__headline']")).getText();
@@ -45,13 +46,13 @@ public class MyHomeWork {
         //browserWindow.findElement(LANGUAGE_TVNET).click();
 
 
-        List<WebElement> headlines = browserWindow.findElements(OPEN_ALL_ARTICLES);
+        List<WebElement> headlines = driver.findElements(OPEN_ALL_ARTICLES);
         for (int i = 0; i < headlines.size(); i++) {
-        System.out.println(headlines.get(i).getText());
+        System.out.println("Article: " + headlines.get(i).getText().replaceAll("\\(\\d+\\)$", "").trim());
         }
 
-        browserWindow.close();
-        //COMMENT FOR GIT
+
+        driver.close();
     }
 
 }
